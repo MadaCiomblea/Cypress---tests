@@ -13,7 +13,7 @@ Cypress.Commands.add('login_check', function () {
       "&client_secret=" +
       encodeURIComponent(clientSecret) +
       "&client_id=" +
-      encodeURIComponent("C178982") +
+      encodeURIComponent("C931293") +
       "&customer-site-login=" +
       encodeURIComponent(customerSiteLogin);
     let headers = {
@@ -31,7 +31,7 @@ Cypress.Commands.add('login_check', function () {
      
     access_token = body
      
-      cy.visit(`http://customer.nextbite.webdev.roweb.ro/login/424/520/C178982`);
+      cy.visit(`http://customer.nextbite.webdev.roweb.ro/login/424/520/C931293`);
       
     });     
    });

@@ -15,7 +15,7 @@ describe("Extras", function () {
       .should("contain", "Name")
       .and("contain", "Required")
       .and("not.have.text", "up");
-      cy.wait(3000);
+    cy.wait(3000);
     cy.get(".dish-details > .footer > .round-button").should("not.be.enabled");
   });
 });

@@ -12,7 +12,7 @@ describe("Horizontal menu", function () {
     cy.get('span[class="english-text"]')
       .contains("Tune Up Under 500 Calories")
       .click({ force: true });
-      cy.wait(3000)
+    cy.wait(3000);
     cy.get('div[class="category-menu ng-star-inserted"]').should(
       "contain",
       "Tune Up Under 500 Calories"

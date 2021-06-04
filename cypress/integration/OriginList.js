@@ -10,71 +10,53 @@ describe("Check Origin List", function () {
     cy.get(".groups").contains("Lunch").click();
     cy.wait(2000);
 
-    
-    //         cy.get('div[class="origins-button round-button ng-star-inserted"]').scrollIntoView().should('not.be.visible')
-    //         .log('The origin list is NOT visible!')
 
-    //    cy.get('div[class="origins-button round-button ng-star-inserted"]').scrollIntoView().then(($btn) => {
-    //        console.log($btn)
-    //             if ($btn.hasClass('visible')) {
-    //                 cy.log('yes')
-    //             } else {
-    //              cy.log('NOT')
-    //             }
-    //         })
+    cy.get("body").then(($body) => {
+      if (
+        $body.find('div[class="origins-button round-button ng-star-inserted"]')
+          .length > 0
+      ) {
+        cy.log("The Origin List exists!");
+        cy.get('div[class="origins-button round-button ng-star-inserted"]')
+          .scrollIntoView()
+          .should("be.visible")
+          .click({ force: true });
 
-  //  cy.get('div[class="origins-button round-button ng-star-inserted"]').scrollIntoView().should('be.visible')
-  //          .click({force:true}) .log('The origin list is visible!')
+          cy.get('[style="font-size: 18px; font-weight: lighter; padding-top: 1.5em; padding-bottom: 1.5em;"]')
+          .should("be.visible")
+          .then(($arabic) => {
+            if ($arabic.find('span[class="arabic-text"]').length > 0) {
+              cy.get('span[class="arabic-text"]')
+                .contains("عربي")
+                .log("Arabic Origin List exists!")
+                .click({ force: true });
+              cy.wait(3000);
+            } else {
+              cy.log("Arabic Origin List DOES NOT exist!");
+            }
+          });
 
+          cy.get('[style="font-size: 18px; font-weight: lighter; padding-top: 1.5em; padding-bottom: 1.5em;"]')
+          .should("be.visible")
+          .then(($english) => {
+            if ($english.find('span[class="english-text"]').length > 0) {
+              cy.get('span[class="english-text"]')
+                .contains("English")
+                .log("English Origin List exists!")
+                .click({ force: true });
+              cy.wait(3000);
+            } else {
+              cy.log("English Origin List DOES NOT exist!");
+            }
+          });
 
-  // cy.get('div[class="origins-button round-button ng-star-inserted"]').then(($btn)=>{
-
-  //   if($btn.hasClass('active')){
-  //     cy.log('exista')
-  //   }else {
-  //     cy.log('nu exista')
-  //   }
- 
-  // })
-    
-  cy.get('div[class="origins-button round-button ng-star-inserted"]').then((subject)=> {
-    
-    console.log(subject[0])
-    if(subject[0]){
-      cy.log('The Origin List exists!')
-      cy.get(subject[0]).scrollIntoView().click({force:true})
-      cy.get('span[class="arabic-text"]').contains('عربي').log('Arabic Origin List exists!').click({force:true});
-      cy.wait(3000)
-      cy.get('span[class="english-text"]').contains('English').log('English Origin List exists!').click({force:true});
-      cy.wait(3000)
-      cy.get('div[class="popup"]')
-      .find(
-        'img[src*="close popup button.svg"]'
-      ).click()
-      
-    }else{
-      cy.log('nu')
-    }
-  })
- })
-
-//     cy.wait(2000);
-//   });
-// });
-//  let originList = cy.get('div[class="origins-button"]')
-//  if(originList != null){
-//  console.log('found')
-//  }else{
-//    console.log('error')
-//  }
-// cy.get('div[class="origins-button round-button ng-star-inserted"]').then((subject)=> {
-// console.log('found')
-// })
-//   .catch((err) => {
-//     // oh no the button wasn't found
-//     // (or something else failed)
-//     console.log('error')
-//   })
-
-})
-
+        cy.wait(3000);
+        cy.get('div[class="popup"]')
+          .find('img[src*="close popup button.svg"]')
+          .click();
+      } else {
+        cy.log("The Origin List does not exist!");
+      }
+    });
+  });
+});

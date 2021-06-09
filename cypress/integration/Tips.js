@@ -32,11 +32,11 @@ describe("Check Tips Values", function () {
 
     cy.request({
       method: "PUT",
-      url: "http://api.nextbite.webdev.roweb.ro/api/orders/approve/14401/mobile",
+      url: `http://api.nextbite.webdev.roweb.ro/api/orders/approve/${Cypress.env("orderId")}/mobile`,
       headers: {
-        Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1laWQiOiIzYmQ2NzM1ZC1lMTg2LTRmY2QtYWMzMi1iYzVkZDc4ZGZkYmUiLCJ1bmlxdWVfbmFtZSI6Im1hZGFsaW5hLmNpb21ibGVhQHJvd2ViLnJvIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9hY2Nlc3Njb250cm9sc2VydmljZS8yMDEwLzA3L2NsYWltcy9pZGVudGl0eXByb3ZpZGVyIjoiQVNQLk5FVCBJZGVudGl0eSIsIkFzcE5ldC5JZGVudGl0eS5TZWN1cml0eVN0YW1wIjoiMzYzOWU5MDYtZjEyYS00MWE5LWJhMTQtYzMxYWVjNmI2YWE5Iiwicm9sZSI6IldhaXRlclVzZXIiLCJGVEUiOiIxIiwiQ3VycmVudFVzZXJJZCI6IjNiZDY3MzVkLWUxODYtNGZjZC1hYzMyLWJjNWRkNzhkZmRiZSIsIlNlY3VyaXR5U3RhbXAiOiIzNjM5ZTkwNi1mMTJhLTQxYTktYmExNC1jMzFhZWM2YjZhYTkiLCJlbWFpbCI6Im1hZGFsaW5hLmNpb21ibGVhQHJvd2ViLnJvIiwiVXNlckZ1bGxOYW1lIjoiV2FpdGVyMk0gRWRpdCIsImlzQnJhbmNoQWRtaW4iOiJUcnVlIiwiVGFibGV0QWRtaW4iOiJ0cnVlIiwiY29tcGFueUlkIjoiMzYyIiwiaXNzIjoiaHR0cDovL2FwaS5uZXh0Yml0ZS53ZWJkZXYucm93ZWIucm8iLCJhdWQiOiI0MTRlMTkyN2EzODg0ZjY4YWJjNzlmNzI4MzgzN2ZkMSIsImV4cCI6MTYyMjIyMzM5NSwibmJmIjoxNjIyMTg3Mzk1fQ.Mt6Y59YnZc6O3CWa7xlgsTwnG718QwqQmxN7wMGbmvU`,
-        RestaurantId: 424 + "",
-        BranchId: 520 + "",
+        Authorization: Cypress.env("waiter_token"),
+        RestaurantId: Cypress.env("restaurantID") + "",
+        BranchId: Cypress.env("branchID") + "",
         "Content-Type": "application/json",
         DeviceId: "123456",
       },

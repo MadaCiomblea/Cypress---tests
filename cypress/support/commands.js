@@ -1,4 +1,6 @@
+/// <reference types="cypress">
 
+import "cypress-localstorage-commands"
 
 Cypress.Commands.add('login_check', function () {
      
@@ -13,13 +15,13 @@ Cypress.Commands.add('login_check', function () {
       "&client_secret=" +
       encodeURIComponent(clientSecret) +
       "&client_id=" +
-      encodeURIComponent("C931293") +
+      encodeURIComponent(Cypress.env("customerCode")) +
       "&customer-site-login=" +
       encodeURIComponent(customerSiteLogin);
     let headers = {
       "Content-Type": "application/x-www-form-urlencoded",
-      RestaurantId: 424 + "",
-      BranchId: 520 + "",
+      RestaurantId: Cypress.env("restaurantID") + "",
+      BranchId: Cypress.env("branchID") + "",
     };
     cy.request({
       method: "POST",
@@ -31,7 +33,13 @@ Cypress.Commands.add('login_check', function () {
      
     access_token = body
      
-      cy.visit(`http://customer.nextbite.webdev.roweb.ro/login/424/520/C931293`);
+      cy.visit(`http://customer.nextbite.webdev.roweb.ro/login/424/520/${Cypress.env("customerCode")}`);
       
     });     
    });
+
+   
+
+   
+     
+  

@@ -1,4 +1,16 @@
 describe("Start Ordering test", function () {
+
+  beforeEach(() => {
+    cy.restoreLocalStorage();
+  });
+
+  afterEach(() => {
+    cy.saveLocalStorage();
+  });
+  after(() => {
+    cy.clear_table();
+  })
+
      it("Login check", function () {
      cy.login_check();
   });
@@ -33,11 +45,12 @@ describe("Start Ordering test", function () {
   it("Send Order", function () {
 
     cy.get('div[class="review-order-page"]').contains("Send Order").click();
-    Cypress.env();
+    
+    cy.window().then(window =>{ var orderId = window.localStorage.getItem('orderId')  
 
     cy.request({
       method: "PUT",
-      url: `http://api.nextbite.webdev.roweb.ro/api/orders/approve/${Cypress.env("orderId")}/mobile`,
+      url: `http://api.nextbite.webdev.roweb.ro/api/orders/approve/${orderId}/mobile`,
       headers: {
         Authorization: Cypress.env("waiter_token"),
         RestaurantId: Cypress.env("restaurantID") + "",
@@ -46,6 +59,7 @@ describe("Start Ordering test", function () {
         DeviceId: "123456",
       },
     });
+  })
     cy.wait(3000);
     //cy.contains("Give Tips").click();
     cy.get("payment-tips > .flex-row > :nth-child(1)").then(($baseValue) => {
@@ -62,10 +76,7 @@ describe("Start Ordering test", function () {
   });
 
   it("Send payment and Rejected Payment", function () {
-    // let yourEmail = "madalina.ciomblea@roweb.ro";
-    // cy.wait(1000);
-    // cy.get("#user-email-input").type(yourEmail).should("have.value", yourEmail);
-    // cy.wait(1000);
+  
     cy.get("#mat-radio-3").find("input").click({ force: true });
     cy.wait(2000);
 
@@ -156,7 +167,14 @@ describe("Start Ordering test", function () {
     .click();
     
     cy.wait(3000);
-    cy.contains("Order More").click();
+  cy.intercept('http://api.nextbite.webdev.roweb.ro/api/mobile/waiter/selfclearandrestore').as('orderMore')
+  
+
+  cy.contains("Order More").click();
+
+  cy.wait('@orderMore').its('response.statusCode').should('eq', 200)
+ 
+ // cy.wait(3000);
 
 
   });

@@ -1,4 +1,15 @@
 describe("Check Feedback functionality - HAPPY Feedback", function () {
+  beforeEach(() => {
+    cy.restoreLocalStorage();
+  });
+
+  afterEach(() => {
+    cy.saveLocalStorage();
+  });
+  after(() => {
+    cy.clear_table();
+  })
+  
   it("login step", function () {
     cy.login_check();
 
@@ -30,11 +41,12 @@ describe("Check Feedback functionality - HAPPY Feedback", function () {
   it("Send Order", function () {
     cy.get('div[class="review-order-page"]').contains("Send Order").click();
 
-    Cypress.env();
-
+    cy.window().then(window =>{ var orderId = window.localStorage.getItem('orderId') 
+    cy.wait(2000)
+    console.log(orderId)
     cy.request({
       method: "PUT",
-      url: `http://api.nextbite.webdev.roweb.ro/api/orders/approve/${Cypress.env("orderId")}/mobile`,
+      url: `http://api.nextbite.webdev.roweb.ro/api/orders/approve/${orderId}/mobile`,
       headers: {
         Authorization: Cypress.env("waiter_token"),
         RestaurantId: Cypress.env("restaurantID") + "",
@@ -44,7 +56,7 @@ describe("Check Feedback functionality - HAPPY Feedback", function () {
       },
     });
     cy.wait(3000);
-
+  })
   });
 
   it("complete and send a HAPPY feedback, one per order", function () {

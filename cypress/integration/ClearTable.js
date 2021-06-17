@@ -1,11 +1,19 @@
 /// <reference types="cypress-localstorage-commands" />
 
 describe("Clear table test", function () {
- 
+
+    beforeEach(() => {
+        cy.restoreLocalStorage();
+      });
+    
+      afterEach(() => {
+        cy.saveLocalStorage();
+      });
+      
     it("Login check", function () {
 
         cy.login_check();
-        cy.saveLocalStorage();
+     
        
     });
     
@@ -20,7 +28,8 @@ describe("Clear table test", function () {
 
      cy.window().then(window =>{ var id = window.localStorage.getItem('customerVisitId')
     
-
+cy.wait(2000);
+console.log(id)
 
         cy.request({
             method: "POST",

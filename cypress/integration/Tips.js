@@ -1,4 +1,17 @@
 describe("Check Tips Values", function () {
+
+  beforeEach(() => {
+    cy.restoreLocalStorage();
+  });
+
+  afterEach(() => {
+    cy.saveLocalStorage();
+  });
+  after(() => {
+    cy.clear_table();
+  })
+
+  
   it("check that the values of the tips are calculated correctly", function () {
     cy.login_check();
 
@@ -30,9 +43,12 @@ describe("Check Tips Values", function () {
   it("Send Order", function () {
     cy.get('div[class="review-order-page"]').contains("Send Order").click();
 
+    cy.window().then(window =>{ var orderId = window.localStorage.getItem('orderId')  
+
+
     cy.request({
       method: "PUT",
-      url: `http://api.nextbite.webdev.roweb.ro/api/orders/approve/${Cypress.env("orderId")}/mobile`,
+      url: `http://api.nextbite.webdev.roweb.ro/api/orders/approve/${orderId}/mobile`,
       headers: {
         Authorization: Cypress.env("waiter_token"),
         RestaurantId: Cypress.env("restaurantID") + "",
@@ -41,6 +57,7 @@ describe("Check Tips Values", function () {
         DeviceId: "123456",
       },
     });
+  })
     cy.wait(1000);
 
     cy.get("payment-tips > .flex-row > :nth-child(1)").then(($baseValue) => {

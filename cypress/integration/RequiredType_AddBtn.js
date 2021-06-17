@@ -1,4 +1,9 @@
 describe("Extras", function () {
+  
+  after(() => {
+    cy.clear_table();
+  })
+
   it("Required extras", function () {
     cy.login_check();
     cy.wait(2000);

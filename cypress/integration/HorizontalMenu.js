@@ -1,4 +1,8 @@
 describe("Horizontal menu", function () {
+  after(() => {
+    cy.clear_table();
+  })
+  
   it("Horizontal menu - click on category", function () {
     cy.login_check();
     cy.wait(2000);

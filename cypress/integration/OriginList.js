@@ -1,4 +1,7 @@
 describe("Check Origin List", function () {
+  after(() => {
+    cy.clear_table();
+  })
   it("check if origin list exists", function () {
     cy.login_check();
 

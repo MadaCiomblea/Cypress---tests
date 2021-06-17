@@ -1,5 +1,8 @@
 describe("Offers", function () {
-  it("Horizontal menu - click on category", function () {
+  after(() => {
+    cy.clear_table();
+  })
+  it("BestSelling, Offers and Must-Try test!", function () {
     cy.login_check();
     cy.wait(2000);
 
@@ -36,9 +39,8 @@ describe("Offers", function () {
             "be.visible",
             "have.attr",
             "style",
-            "background-image: linear-gradient(to right, red , orange);",
-            "have.text",
-            "OFF"
+            "background-image: linear-gradient(to right, red , orange);"
+            
           ).log()
           .then(($offer) => {
             if ($offer.find('span[class="badge-corner"]').length > 0) {
@@ -46,10 +48,12 @@ describe("Offers", function () {
                 .should(
                   "have.attr",
                   "style",
-                  "border-color: transparent transparent orangered transparent;"
+                  "border-color: transparent transparent orangered transparent;",
+                  "have.text",
+                  "OFF"
                 )  
                 .log("Offers exists!")
-       //  console.log($offer.find('span[class="badge-corner"]').length)
+        
               cy.wait(3000);
             } else {
               cy.log("Offers DOES NOT exist!");
@@ -64,8 +68,8 @@ describe("Offers", function () {
             "style",
             "background-image: linear-gradient(to right, red , orange);",
             "have.text",
-            "Must try",
-            
+             "Must try",
+          
           )
           .then(($mustTry) => {
             if ($mustTry.find('span[class="badge-corner"]').length > 0) {
@@ -74,7 +78,9 @@ describe("Offers", function () {
                 .should(
                   "have.attr",
                   "style",
-                  "border-color: transparent transparent orangered transparent;"
+                  "border-color: transparent transparent orangered transparent;",
+                  "have.text",
+                  "Must try",
                 )
 
                 .log("Must-Try exists!");

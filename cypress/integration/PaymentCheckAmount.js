@@ -1,4 +1,16 @@
 describe("Start Ordering test", function () {
+
+  beforeEach(() => {
+    cy.restoreLocalStorage();
+  });
+
+  afterEach(() => {
+    cy.saveLocalStorage();
+  });
+  after(() => {
+    cy.clear_table();
+  })
+
   it("Login check", function () {
     cy.login_check();
   });
@@ -26,15 +38,15 @@ describe("Start Ordering test", function () {
   ///////////////////////////////////////////////
 
   it("Send Order", function () {
+    cy.intercept('http://api.nextbite.webdev.roweb.ro/api/orders/update/mobile').as('updateMobile')
     cy.get('div[class="review-order-page"]').contains("Send Order").click();
+    cy.wait('@updateMobile').its('response.statusCode').should('eq', 200)
+    cy.window().then(window =>{ var orderId = window.localStorage.getItem('orderId') 
 
-    Cypress.env();
-    console.log(Cypress.env());
-    console.log(cy.getLocalStorage().customerVisitId)
     cy.request({
       method: "PUT",
-      url: `http://api.nextbite.webdev.roweb.ro/api/orders/approve/${Cypress.env("orderId")}/mobile`,
-      //url: `http://api.nextbite.webdev.roweb.ro/api/orders/approve/14518/mobile`,
+      url: `http://api.nextbite.webdev.roweb.ro/api/orders/approve/${orderId}/mobile`,
+     
       headers: {
         Authorization: Cypress.env("waiter_token"),
         RestaurantId: Cypress.env("restaurantID") + "",
@@ -43,8 +55,9 @@ describe("Start Ordering test", function () {
         DeviceId: "123456",
       },
     });
-    cy.wait(3000);
+    
   });
+})
   it("Send payment and Rejected Payment", function () {
     cy.get("#mat-radio-3").find("input").click({ force: true });
     cy.wait(1000);

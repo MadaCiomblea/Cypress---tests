@@ -20,10 +20,10 @@ cy.wait(3000)
       "supercalifragilisticexpialidocious"
     );
     cy.wait(1000);
-    cy.get("#mat-checkbox-1").find("input").click({ force: true });
-    cy.wait(1000);
-    cy.get("#mat-checkbox-2").find("input").click({ force: true });
-    cy.wait(1000);
+    // cy.get("#mat-checkbox-1").find("input").click({ force: true });
+    // cy.wait(1000);
+    // cy.get("#mat-checkbox-2").find("input").click({ force: true });
+    // cy.wait(1000);
     cy.contains("ADD").click();
     cy.contains("Send Order").click();
 

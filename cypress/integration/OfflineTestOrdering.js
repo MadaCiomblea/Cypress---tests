@@ -11,7 +11,7 @@ cy.wait(3000)
       "include",
       "http://customer.nextbite.webdev.roweb.ro/customer-menu"
     );
-
+    cy.ads_manager();
     cy.contains("Lunch").click();
     cy.wait(1000);
     cy.contains("Burrata").click();

@@ -1,7 +1,8 @@
-describe("Call Waiter test", function () {
+describe("Call Waiter test and QR Code", function () {
 
   beforeEach(() => {
     cy.restoreLocalStorage();
+    cy.wait(2000)
   });
 
   afterEach(() => {
@@ -19,6 +20,9 @@ describe("Call Waiter test", function () {
 
   it("Call Waiter", function () {
     cy.get(".round-button").click();
+
+    cy.ads_manager();
+    
     cy.get(".groups").contains("Lunch").click();
     cy.window().then(window =>{ var customerVisitId = window.localStorage.getItem('customerVisitId')
 

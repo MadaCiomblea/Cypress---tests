@@ -1,4 +1,4 @@
-describe("Check Origin List", function () {
+describe("Check Origin List if exists", function () {
   after(() => {
     cy.clear_table();
   })
@@ -9,6 +9,8 @@ describe("Check Origin List", function () {
 
     cy.get(".round-button").click();
     cy.wait(2000);
+    
+    cy.ads_manager();
 
     cy.get(".groups").contains("Lunch").click();
     cy.wait(2000);

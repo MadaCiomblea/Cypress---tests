@@ -17,7 +17,7 @@ describe("Check Feedback functionality - HAPPY Feedback", function () {
 
     cy.get(".round-button").click();
     cy.wait(2000);
-
+    cy.ads_manager();
     cy.get(".groups").contains("Lunch").click();
     cy.wait(2000);
   });
@@ -39,11 +39,14 @@ describe("Check Feedback functionality - HAPPY Feedback", function () {
   ///////////////////////////////////////////////
 
   it("Send Order", function () {
+    cy.intercept('http://api.nextbite.webdev.roweb.ro/api/orders/update/mobile').as('updateMobile')
     cy.get('div[class="review-order-page"]').contains("Send Order").click();
 
+    cy.ads_manager();
+
+    cy.wait('@updateMobile').its('response.statusCode').should('eq', 200)
     cy.window().then(window =>{ var orderId = window.localStorage.getItem('orderId') 
-    cy.wait(2000)
-    console.log(orderId)
+
     cy.request({
       method: "PUT",
       url: `http://api.nextbite.webdev.roweb.ro/api/orders/approve/${orderId}/mobile`,

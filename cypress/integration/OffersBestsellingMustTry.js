@@ -1,4 +1,4 @@
-describe("Offers", function () {
+describe("The Offers, BestSelling or/and Must-Try ", function () {
   after(() => {
     cy.clear_table();
   })
@@ -8,7 +8,7 @@ describe("Offers", function () {
 
     cy.get(".round-button").click();
     cy.wait(2000);
-
+    cy.ads_manager();
     cy.get(".groups").contains("Lunch").click();
     cy.wait(2000);
 

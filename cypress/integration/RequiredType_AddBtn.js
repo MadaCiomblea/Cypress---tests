@@ -1,4 +1,4 @@
-describe("Extras", function () {
+describe("Required extras - the Add button should be disabled", function () {
   
   after(() => {
     cy.clear_table();
@@ -10,7 +10,7 @@ describe("Extras", function () {
 
     cy.get(".round-button").click();
     cy.wait(3000);
-
+    cy.ads_manager();
     cy.get(".groups").contains("Lunch").click();
     cy.wait(3000);
 

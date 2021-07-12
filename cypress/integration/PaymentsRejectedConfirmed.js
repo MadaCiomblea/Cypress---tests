@@ -1,4 +1,4 @@
-describe("Start Ordering test", function () {
+describe("Payments - Rejected and Confirmed", function () {
 
   beforeEach(() => {
     cy.restoreLocalStorage();
@@ -17,6 +17,10 @@ describe("Start Ordering test", function () {
 
   it("Start Ordering test", function () {
     cy.get(".round-button").click();
+
+    cy.ads_manager();
+
+
     cy.get(".groups").contains("Lunch").click();
   });
 
@@ -44,9 +48,14 @@ describe("Start Ordering test", function () {
 
   it("Send Order", function () {
 
+    cy.intercept('http://api.nextbite.webdev.roweb.ro/api/orders/update/mobile').as('updateMobile')
     cy.get('div[class="review-order-page"]').contains("Send Order").click();
     
-    cy.window().then(window =>{ var orderId = window.localStorage.getItem('orderId')  
+    cy.ads_manager();
+
+    cy.wait('@updateMobile').its('response.statusCode').should('eq', 200)
+    cy.window().then(window =>{ var orderId = window.localStorage.getItem('orderId') 
+
 
     cy.request({
       method: "PUT",
@@ -117,6 +126,8 @@ describe("Start Ordering test", function () {
       })
  
     cy.wait(4000);
+
+
   });
 
   it("Send payment and Approved Payment and Order More", function () {
@@ -125,6 +136,9 @@ describe("Start Ordering test", function () {
       .find('img[src*="close popup button.svg"]')
       .should("be.visible")
       .click();
+      cy.wait(2000);
+      cy.ads_manager();
+
     cy.get(".pay-button").contains("Pay").click({ force: true });
   
     cy.wait(2000);
@@ -167,6 +181,7 @@ describe("Start Ordering test", function () {
     .click();
     
     cy.wait(3000);
+
   cy.intercept('http://api.nextbite.webdev.roweb.ro/api/mobile/waiter/selfclearandrestore').as('orderMore')
   
 

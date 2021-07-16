@@ -17,5 +17,6 @@
 import './commands_login'
 import './commands2_clearTable'
 import './commands3_Ads'
+import 'cy-mobile-commands'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

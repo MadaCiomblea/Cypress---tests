@@ -53,6 +53,8 @@ cy.wait(3000)
       .should("be.visible")
       .click();
 
+      cy.get('.call-waiter').should('not.be.enabled')
+      cy.get('.footer > .round-button').should('not.be.enabled')
     cy.wait(1000);
     cy.get('div[class="title"]')
       .find('img[src*="back button.svg"]')
@@ -68,5 +70,8 @@ cy.wait(3000)
     cy.contains("View All").click();
     cy.wait(1000);
     cy.contains("View Less").click();
+
+    cy.get('.items-count').click({force:true});
+    cy.contains("Review Order")
   });
 });

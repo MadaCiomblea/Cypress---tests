@@ -1,20 +1,20 @@
 
 describe("Offline login ordering - Start Viewing", function () {
   it("Gets, types and asserts", function () {
-    cy.visit("http://customer.nextbite.webdev.roweb.ro/login/424/520/0");
+    cy.visit(`${Cypress.env("baseUrl")}/login/${Cypress.env("restaurantID")}/${Cypress.env("branchID")}/0`);
 
-    cy.visit("http://customer.nextbite.webdev.roweb.ro/landing");
-cy.wait(3000)
+   
+    cy.wait(3000)
     cy.contains("Start Viewing").click();
 
     cy.url().should(
       "include",
-      "http://customer.nextbite.webdev.roweb.ro/customer-menu"
+      `${Cypress.env("baseUrl")}/customer-menu`
     );
     cy.ads_manager();
-    cy.contains("Lunch").click();
+    cy.get(".groups").contains("Menu").click();
     cy.wait(1000);
-    cy.contains("Burrata").click();
+    cy.contains("Chicken Avo Rice").click();
     cy.wait(1000);
     cy.get("#special-request-input-id").type(
       "supercalifragilisticexpialidocious"
@@ -53,17 +53,15 @@ cy.wait(3000)
       .should("be.visible")
       .click();
 
-      cy.get('.call-waiter').should('not.be.enabled')
-      cy.get('.footer > .round-button').should('not.be.enabled')
+    cy.get('.call-waiter').should('not.be.enabled')
+    cy.get('.footer > .round-button').should('not.be.enabled')
     cy.wait(1000);
     cy.get('div[class="title"]')
       .find('img[src*="back button.svg"]')
       .should("be.visible")
       .click();
 
-    cy.get(
-      'div[class="origins-button round-button ng-star-inserted"]'
-    ).scrollIntoView({ duration: 2000 });
+      cy.get('.footer.flex-shrink0 > .footer').scrollIntoView({ duration: 4000 });
 
     cy.get('div[id="header"]').scrollIntoView();
     cy.wait(1000);
@@ -71,7 +69,7 @@ cy.wait(3000)
     cy.wait(1000);
     cy.contains("View Less").click();
 
-    cy.get('.items-count').click({force:true});
+    cy.get('.items-count').click({ force: true });
     cy.contains("Review Order")
   });
 });

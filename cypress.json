@@ -1,5 +1,11 @@
 {
-  "projectId": "zg9y5t",
-  "viewportWidth": 414,
-  "viewportHeight": 763
+  "projectId": "b55z9q",
+ 
+  "baseUrl": "http://customer.compat.nextbite.webdev.roweb.ro",
+
+  "reporter": "cypress-multi-reporters",
+  "reporterOptions": {
+    "configFile": "reporter-config.json"
+  }
+  
 }

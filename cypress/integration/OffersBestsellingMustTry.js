@@ -9,13 +9,13 @@ describe("The Offers, BestSelling or/and Must-Try ", function () {
     cy.get(".round-button").click();
     cy.wait(2000);
     cy.ads_manager();
-    cy.get(".groups").contains("Lunch").click();
+    cy.get(".groups").contains("Menu").click();
     cy.wait(2000);
 
     cy.get("body").then(($body) => {
       if ($body.find('div[class="badge-box ng-star-inserted"]').length > 0) {
         cy.log("The Offers, BestSelling or Must-Try exist!");
-        
+
         cy.get('div[class="badge-box ng-star-inserted"]')
           .should(
             "be.visible",
@@ -40,25 +40,24 @@ describe("The Offers, BestSelling or/and Must-Try ", function () {
             "have.attr",
             "style",
             "background-image: linear-gradient(to right, red , orange);"
-            
+
           ).log()
           .then(($offer) => {
+            cy.log($offer.find('span[class="badge-corner"]'))
+            cy.log($offer)
             if ($offer.find('span[class="badge-corner"]').length > 0) {
               cy.get('span[class="badge-corner"]')
                 .should(
-                  "have.attr",
-                  "style",
-                  "border-color: transparent transparent orangered transparent;",
                   "have.text",
                   "OFF"
-                )  
+                )
                 .log("Offers exists!")
-        
+
               cy.wait(3000);
             } else {
               cy.log("Offers DOES NOT exist!");
             }
-          
+
           });
 
         cy.get('div[class="badge-box ng-star-inserted"]')
@@ -68,12 +67,12 @@ describe("The Offers, BestSelling or/and Must-Try ", function () {
             "style",
             "background-image: linear-gradient(to right, red , orange);",
             "have.text",
-             "Must try",
-          
+            "Must try",
+
           )
           .then(($mustTry) => {
             if ($mustTry.find('span[class="badge-corner"]').length > 0) {
-             
+
               cy.get('span[class="badge-corner"]')
                 .should(
                   "have.attr",
@@ -85,7 +84,7 @@ describe("The Offers, BestSelling or/and Must-Try ", function () {
 
                 .log("Must-Try exists!");
               cy.wait(3000);
-            
+
               console.log($mustTry[0])
             } else {
               cy.log("Must-Try DOES NOT exist!");

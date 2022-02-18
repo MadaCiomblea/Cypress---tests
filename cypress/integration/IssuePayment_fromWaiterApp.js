@@ -1,4 +1,4 @@
-describe("Confirm Payment from waiter app - in the Ordering UI will appear the order, the footer with the correct amount, and paymnet confirmation popup", function () {
+describe("Confirm Payment from waiter app - in the Ordering UI will appear the order and the payment with specific details and the customer clicks Order More and update the order", function () {
   beforeEach(() => {
     cy.restoreLocalStorage();
   });
@@ -18,7 +18,7 @@ describe("Confirm Payment from waiter app - in the Ordering UI will appear the o
     cy.get(".round-button").click();
     cy.wait(2000);
     cy.ads_manager();
-    cy.get(".groups").contains("Lunch").click();
+    cy.get(".groups").contains("Menu").click();
     cy.wait(2000);
 
     cy.get("body").then(($footer) => {
@@ -32,7 +32,7 @@ describe("Confirm Payment from waiter app - in the Ordering UI will appear the o
 
           cy.request({
             method: "PUT",
-            url: "http://api.nextbite.webdev.roweb.ro/api/orders/update/waiter/mobile",
+            url: `${Cypress.env("apiUrl")}/api/orders/update/waiter/mobile`,
             headers: {
               Authorization: Cypress.env("waiter_token"),
               RestaurantId: Cypress.env("restaurantID") + "",
@@ -52,7 +52,7 @@ describe("Confirm Payment from waiter app - in the Ordering UI will appear the o
                 orderItems: [
                   {
                     orderId: orderId,
-                    itemId: 2586,
+                    itemId: 3860,
                     itemName: "Capra Salad",
                     isPaid: false,
                     itemPrice: 3.85,
@@ -69,7 +69,7 @@ describe("Confirm Payment from waiter app - in the Ordering UI will appear the o
                   },
                   {
                     orderId: orderId,
-                    itemId: 2586,
+                    itemId: 3860,
                     itemName: "Capra Salad",
                     isPaid: false,
                     itemPrice: 3.85,
@@ -90,56 +90,23 @@ describe("Confirm Payment from waiter app - in the Ordering UI will appear the o
           });
         });
       }
+
+    }).then(() => {
     });
+  });
+  it("Add payment and confirm cash payment by waiter", function () {
 
-    cy.window().then((window) => {
-      var orderId = window.localStorage.getItem("orderId");
-      cy.request({
-        method: "POST",
-        url: "http://api.nextbite.webdev.roweb.ro/api/orders/payments/add",
-        headers: {
-          Authorization: Cypress.env("waiter_token"),
-          RestaurantId: Cypress.env("restaurantID") + "",
-          BranchId: Cypress.env("branchID") + "",
-          "Content-Type": "application/json",
-          deviceId: "B9BB7777-CB33-4C0A-B088-988E03382FC4",
-        },
-        body: {
-          orderId: cy.getLocalStorage().orderId,
-          isCashPayment: true,
-          SentFromCustomer: false,
-          amount: cy.getLocalStorage().amount,
-          isCashPayment: true,
-          waiterId: 1079,
-        },
-      }).then(($resp)=>{
-          
-      })
+    cy.confirmPaymentByWaiter();
+    
+    cy.get('.paid-box').should('contain', "دفـع").should('have.css', 'background-color')
+      .and('eq', 'rgb(82, 184, 47)');
+    cy.get('.pay-button').contains('Order More').click();
+    cy.contains("Chicken Avo Rice").click({ multiple: true, force: true });
+    cy.contains("ADD").click();
+    cy.contains("Send Order").click({ multiple: true, force: true });
 
-      console.log(orderId);
+    cy.updateOrder();
 
-      // cy.request({
-      //     method: "POST",
-      //     url: "http://api.nextbite.webdev.roweb.ro/api/mobile/waiter/payment/confirmation",
-      //     headers: {
-      //       Authorization: Cypress.env("waiter_token"),
-      //       RestaurantId: Cypress.env("restaurantID") + "",
-      //       BranchId: Cypress.env("branchID") + "",
-      //       "Content-Type": "application/json",
-      //       deviceId: "B9BB7777-CB33-4C0A-B088-988E03382FC4",
 
-      //     },
-      //     body:
-      //         {
-
-      //             CustomerVisitId: cy.getLocalStorage().customerVisitId,
-      //             PaymentId: 60067,
-      //             Remark: "",
-      //             Status: "Rejected",
-      //             waiterId: 1079,
-      //         }
-
-      //   });
-    });
   });
 });

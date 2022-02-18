@@ -2,7 +2,7 @@ describe("Horizontal menu - go to the selected category", function () {
   after(() => {
     cy.clear_table();
   })
-  
+
   it("Horizontal menu - click on category", function () {
     cy.login_check();
     cy.wait(2000);
@@ -10,7 +10,7 @@ describe("Horizontal menu - go to the selected category", function () {
     cy.get(".round-button").click();
     cy.wait(2000);
     cy.ads_manager();
-    cy.get(".groups").contains("Lunch").click();
+    cy.get(".groups").contains("Menu").click();
     cy.wait(2000);
 
     cy.get('span[class="english-text"]')

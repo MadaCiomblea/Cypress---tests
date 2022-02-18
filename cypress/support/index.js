@@ -15,8 +15,15 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands_login'
+import './commands_loginEvent'
 import './commands2_clearTable'
+import './commands_clearTableEvent'
 import './commands3_Ads'
+import './commands_orderProcess'
+import './commands_updateOrder'
+import './commands_confirmedPayment'
+import './commands_rejectedPayment'
+import './commands_confirmPaymentByWaiter'
 import 'cy-mobile-commands'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

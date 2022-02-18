@@ -9,10 +9,10 @@ describe("Check Origin List if exists", function () {
 
     cy.get(".round-button").click();
     cy.wait(2000);
-    
+
     cy.ads_manager();
 
-    cy.get(".groups").contains("Lunch").click();
+    cy.get(".groups").contains("Menu").click();
     cy.wait(2000);
 
 
@@ -27,7 +27,7 @@ describe("Check Origin List if exists", function () {
           .should("be.visible")
           .click({ force: true });
 
-          cy.get('[style="font-size: 18px; font-weight: lighter; padding-top: 1.5em; padding-bottom: 1.5em;"]')
+        cy.get('[style="font-size: 18px; font-weight: lighter; padding-top: 1.5em; padding-bottom: 1.5em;"]')
           .should("be.visible")
           .then(($arabic) => {
             if ($arabic.find('span[class="arabic-text"]').length > 0) {
@@ -41,7 +41,7 @@ describe("Check Origin List if exists", function () {
             }
           });
 
-          cy.get('[style="font-size: 18px; font-weight: lighter; padding-top: 1.5em; padding-bottom: 1.5em;"]')
+        cy.get('[style="font-size: 18px; font-weight: lighter; padding-top: 1.5em; padding-bottom: 1.5em;"]')
           .should("be.visible")
           .then(($english) => {
             if ($english.find('span[class="english-text"]').length > 0) {
